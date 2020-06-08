@@ -27,14 +27,12 @@ cron "04 00 * * *" script-path=https://raw.githubusercontent.com/Sunert/Scripts/
 
 -----------------
 
-
  */
-const stop = "500" //票价报错时调整延迟时间,默认50为0.5秒
-const leftstation ='深圳'  //出发地
-const tostation = '菏泽'   //目的地
+const leftstation ='北京'  //出发地
+const tostation = '上海'   //目的地
 const purpose = 'ADULT'   //乘客类型，'ADULT'是成人，'0X00'是学生
-const leftdate = '2020-05-27' //出发日期
-const K = ' 5 '  //车次序号!!
+const leftdate = '2020-06-30' //出发日期
+const K = ' 1 '  //车次序号!!
 
 let isQuantumultX = $task != undefined; //判断当前运行环境是否是qx
 let isSurge = $httpClient != undefined; //判断当前运行环境是否是surge
@@ -191,6 +189,21 @@ resolve()
    })
   })
 }
+var date = new Date();
+var year = date.getFullYear();
+var month = date.getMonth() + 1;
+var day = date.getDate()+1;
+if (month < 10) {
+    month = "0" + month;
+}
+if (day < 10) {
+    day = "0" + day+1;
+}
+var nowDate = year + "-" + month + "-" + day;
+if (nowDate > leftdate ){
+ $notify(`火车查询错误❌`,"日期错误,请检查后重试",''),
+$done()
+}
 
 // 获取车次列表
 function trainscheck() {
@@ -283,40 +296,40 @@ $task.fetch(myRequest).then(response => {
     console.log('票价信息: ' + response.body+'\n');
    let result = JSON.parse(response.body)
    if (result.data.M){
-   setyideng += `(${result.data.M})`
+   setyideng += `(${result.data.M})  `
    }
    if (result.data.O){
-   seterdeng += `(${result.data.O})`
+   seterdeng += `(${result.data.O})  `
    }
    if (result.data.A3){
-   setyingwo += `(${result.data.A3})`
+   setyingwo += `(${result.data.A3})  `
    }
    if (result.data.F){
-   setdongwo += `(${result.data.F})`
+   setdongwo += `(${result.data.F})  `
    }
    if (result.data.A1){
-   setyingzuo += `(${result.data.A1})`
+   setyingzuo += `(${result.data.A1})  `
    }
    if (result.data.A2){
-   setruanzuo += `(${result.data.A2})`
+   setruanzuo += `(${result.data.A2})  `
    }
    if (result.data.WZ){
-   setwuzuo += `(${result.data.WZ})`
+   setwuzuo += `(${result.data.WZ})  `
    }
    if (result.data.A9){
-   setshangwu += `(${result.data.A9})`
+   setshangwu += `(${result.data.A9})  `
    }
    if (result.data.AI){
-   setruanwo += `(${result.data.AI})`
+   setruanwo += `(${result.data.AI})  `
    }
    if (result.data.A4){
-   setruanwo += `(${result.data.A4})`
+   setruanwo += `(${result.data.A4})  `
    }
    if (result.data.A6){
-   setruanwopro += `(${result.data.A6})`
+   setruanwopro += `(${result.data.A6})  `
    }
    if (result.data.AJ){
-   setyingwo += `(${result.data.AJ})`
+   setyingwo += `(${result.data.AJ})  `
    }
 }
 catch (e){
@@ -324,7 +337,7 @@ catch (e){
    }
 resolve()
   })
-  },stop)
+  })
  })
 }
 
@@ -350,7 +363,7 @@ if (setyideng){
    detail += '一等座: '+setyideng
   }
 if (seterdeng){
-   detail += '  二等座: '+seterdeng
+   detail += '二等座: '+seterdeng
   }
 if (setshangwu){
    detail += '\n商务座: '+setshangwu
@@ -359,30 +372,30 @@ if (setyingzuo){
    detail += '硬座: '+setyingzuo
   }
 if (setruanzuo){
-   detail += '   软座: '+setruanzuo
+   detail += '软座: '+setruanzuo  
   }
 if (setwuzuo){
-   detail += '   无座: '+setwuzuo
+   detail += '无座: '+setwuzuo
   }
 if (setruanwo){
    detail += '\n软卧: '+setruanwo
   }
 if (setyingwo){
-   detail += '  硬卧: '+setyingwo
+   detail += '硬卧: '+setyingwo
   }
 if (setruanwopro){
-   detail += '  高级软卧: '+setruanwopro
+   detail += '高级软卧: '+setruanwopro
   }
 if (setdongwo){
-  detail += '  动卧: '+setdongwo
+  detail += '动卧: '+setdongwo
   }
   detail +='\n'+leftstation+'到达目的地'+tostation+'历时'+totaltime+'\n'+arrivetime +'--'+starttime+ '  '+stationname
 for (i=1;i<result.data.data.length;i++){
     detail  += `\n`+result.data.data[i].arrive_time +'--'+result.data.data[i].start_time+ '  '+result.data.data[i].station_name
 }
-const title = traincode+ "次列车时刻表🚄"
-const subTitle = '始发站: '+startstation+ '--终点站: '+endstation+ " / 出行日期 " +leftdate
- $notify(title, subTitle, detail)
+const title = traincode+ "次列车时刻🚄"
+const subTitle = '始发站: '+startstation+ '--终点站: '+endstation
+ $notify(title+ " / 出行日期 " +leftdate, subTitle, detail)
   console.log(traincode+'次列车  \n'+detail)
   }
 } catch (e){
