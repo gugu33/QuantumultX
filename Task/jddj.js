@@ -1,4 +1,5 @@
 /*
+更新时间: 2020-06-08 20:45
 
 > 感谢 [@barry](https://t.me/barrymchen) 编写
 > 感谢 [@GideonSenku](https://github.com/GideonSenku) 对代码优化
@@ -108,6 +109,7 @@ function sign() {
       subTitle = `签到结果: 失败`
       detail = `说明: ${result.msg}`
       sy.msg(title, subTitle, detail)
+      return
     } else if (result.result.userInfoResponse.hasSign == true) {    
     for (let i = 0; i < result.result.sevenDaysRewardResponse.items.length; i++){
     if (result.result.sevenDaysRewardResponse.items[i].day == result.result.sevenDaysRewardResponse.alreadySignInDays){

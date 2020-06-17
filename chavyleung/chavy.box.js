@@ -91,13 +91,19 @@ function getSystemApps() {
       repo: 'https://github.com/chavyleung/scripts/tree/master/apktw',
       url: 'https://apk.tw/',
       icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/apktw.png',
-      tasks: [{ cron: '3 0 * * *', script: 'noteyoudao.js' }],
-      rewrites: [{ type: 'request', pattern: '^https://note.youdao.com/yws/mapi/user?method=checkin', script: 'noteyoudao.cookie.js', body: true }]
+      tasks: [{ cron: '3 0 * * *', script: 'apktw.js' }],
+      rewrites: [{ type: 'request', pattern: '^https://apk.tw/member.php(.*?)action=login', script: 'apktw.cookie.js', body: true }]
     },
     {
       id: 'BAIDU',
       name: '百度签到',
       keys: ['chavy_cookie_tieba'],
+      settings: [
+        { id: 'CFG_tieba_isOrderBars', name: '按连签排序', val: false, type: 'boolean', desc: '默认按经验排序' },
+        { id: 'CFG_tieba_maxShowBars', name: '每页显示数', val: 15, type: 'text', desc: '每页最显示多少个吧信息' },
+        { id: 'CFG_tieba_maxSignBars', name: '每次并发', val: 5, type: 'text', desc: '每次并发签到多少个吧' },
+        { id: 'CFG_tieba_signWaitTime', name: '并发间隔 (毫秒)', val: 2000, type: 'text', desc: '每次并发间隔时间' }
+      ],
       author: '@chavyleung',
       repo: 'https://github.com/chavyleung/scripts/tree/master/tieba',
       icon: 'https://is4-ssl.mzstatic.com/image/thumb/Purple113/v4/0a/33/50/0a335055-952a-6860-76aa-c657b2627a78/AppIcon-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-85-220.jpeg/434x0w.jpg'
@@ -122,6 +128,14 @@ function getSystemApps() {
       id: 'JD618',
       name: '京东618',
       keys: ['chavy_url_jd816', 'chavy_body_jd816', 'chavy_headers_jd816'],
+      settings: [
+        { id: 'CFG_618_radomms_min', name: '最小随机等待 (毫秒)', val: 2000, type: 'text', desc: '在任务默认的等待时间基础上，再增加的随机等待时间！' },
+        { id: 'CFG_618_radomms_max', name: '最大随机等待 (毫秒)', val: 5000, type: 'text', desc: '在任务默认的等待时间基础上，再增加的随机等待时间！' },
+        { id: 'CFG_618_isSignShop', name: '商店签到', val: true, type: 'boolean', desc: '71 家商店, 如果每天都签不上, 可以关掉了! 默认: true' },
+        { id: 'CFG_618_isJoinBrand', name: '品牌会员', val: false, type: 'boolean', desc: '25 个品牌, 会自动加入品牌会员! 默认: true' },
+        { id: 'CFG_BOOM_times_JD618', name: '炸弹次数', val: 1, type: 'text', desc: '总共发送多少次炸弹! 默认: 1' },
+        { id: 'CFG_BOOM_interval_JD618', name: '炸弹间隔 (毫秒)', val: 100, type: 'text', desc: '每次间隔多少毫秒! 默认: 100' }
+      ],
       author: '@chavyleung',
       repo: 'https://github.com/chavyleung/scripts/tree/master/jd',
       icon: 'https://is4-ssl.mzstatic.com/image/thumb/Purple113/v4/0b/7c/08/0b7c08b3-4c03-1d92-5461-32c176a6fc30/AppIcon-0-0-1x_U007emarketing-0-0-0-6-0-0-85-220.png/460x0w.png'
@@ -143,6 +157,26 @@ function getSystemApps() {
       icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/v2ex.png'
     },
     {
+      id: 'NeteaseMusic',
+      name: '网易云音乐',
+      keys: ['chavy_cookie_neteasemusic'],
+      settings: [
+        { id: 'CFG_neteasemusic_retryCnt', name: '重试次数', val: 10, type: 'text', desc: '一直尝试签到直至出现“重复签到”标识!' },
+        { id: 'CFG_neteasemusic_retryInterval', name: '重试间隔 (毫秒)', val: 500, type: 'text', desc: '每次重试间隔时间 (毫秒)！' }
+      ],
+      author: '@chavyleung',
+      repo: 'https://github.com/chavyleung/scripts/tree/master/neteasemusic',
+      icon: 'https://is3-ssl.mzstatic.com/image/thumb/Purple113/v4/ef/e3/f4/efe3f4fa-288f-65fc-fc59-eacf6c1cea01/AppIcon-0-0-1x_U007emarketing-0-0-0-6-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/460x0w.png'
+    },
+    {
+      id: 'WPS',
+      name: 'WPS',
+      keys: ['chavy_signhomeurl_wps', 'chavy_signhomeheader_wps'],
+      author: '@chavyleung',
+      repo: 'https://github.com/chavyleung/scripts/tree/master/wps',
+      icon: 'https://is3-ssl.mzstatic.com/image/thumb/Purple123/v4/a0/15/bc/a015bcec-e853-cdb3-a97b-573c15771265/AppIcon-0-1x_U007emarketing-0-7-0-0-0-0-85-220.png/492x0w.png'
+    },
+    {
       id: 'NoteYoudao',
       name: '有道云笔记',
       keys: ['chavy_signurl_noteyoudao', 'chavy_signbody_noteyoudao', 'chavy_signheaders_noteyoudao'],
@@ -159,6 +193,17 @@ function getSystemApps() {
     app.keys.forEach((key) => {
       app.datas.push({ key, val: $.getdata(key) })
     })
+    Array.isArray(app.settings) &&
+      app.settings.forEach((setting) => {
+        const val = $.getdata(setting.id)
+        if (setting.type === 'boolean') {
+          setting.val = val === null ? setting.val : val === 'true'
+        } else if (setting.type === 'int') {
+          setting.val = val * 1 || setting.val
+        } else {
+          setting.val = val || setting.val
+        }
+      })
   })
   return sysapps
 }
@@ -203,6 +248,39 @@ function handleApi() {
       $.msg($.name, $.subt, $.desc.join('\n'))
     }
   }
+  // 保存当前会话
+  if (data.cmd === 'saveCurAppSession') {
+    const app = data.val
+    const isExistsApp = getSystemApps().find((_app) => _app.id === app.id)
+    if (isExistsApp) {
+      let isAllSaveSuc = true
+      app.datas.forEach((data) => {
+        const oldval = $.getdata(data.key)
+        const newval = data.val
+        const savesuc = $.setdata(`${newval}`, data.key)
+        isAllSaveSuc = !savesuc ? false : isAllSaveSuc
+        $.log('', `❕ ${app.name}, 保存设置: ${data.key} ${savesuc ? '成功' : '失败'}!`, `旧值: ${oldval}`, `新值: ${newval}`)
+      })
+      $.subt = `保存会话: ${isAllSaveSuc ? '成功' : '失败'} (${app.name})`
+      $.msg($.name, $.subt, '')
+    }
+  }
+  // 保存设置
+  else if (data.cmd === 'saveSettings') {
+    $.log(`❕ ${$.name}, 保存设置!`)
+    const settings = data.val
+    if (Array.isArray(settings)) {
+      settings.forEach((setting) => {
+        const oldval = $.getdata(setting.id)
+        const newval = setting.val
+        const usesuc = $.setdata(`${newval}`, setting.id)
+        $.log(`❕ ${$.name}, 保存设置: ${setting.id} ${usesuc ? '成功' : '失败'}!`, `旧值: ${oldval}`, `新值: ${newval}`)
+        $.setdata(`${newval}`, setting.id)
+      })
+      $.subt = `保存设置: 成功! `
+      $.msg($.name, $.subt, '')
+    }
+  }
   // 应用会话
   else if (data.cmd === 'useSession') {
     $.log(`❕ ${$.name}, 应用会话!`)
@@ -213,7 +291,7 @@ function handleApi() {
       session.datas.forEach((data) => {
         const oldval = $.getdata(data.key)
         const newval = data.val
-        const usesuc = $.setdata(newval, data.key)
+        const usesuc = $.setdata(`${newval}`, data.key)
         $.log(`❕ ${$.name}, 替换数据: ${data.key} ${usesuc ? '成功' : '失败'}!`, `旧值: ${oldval}`, `新值: ${newval}`)
       })
       $.subt = `应用会话: 成功 (${session.appName})`
@@ -346,6 +424,25 @@ function printHtml(data, curapp = null) {
               </v-card>
             </v-container>
             <v-container fluid v-if="ui.curview === 'appsession'">
+              <v-card class="mx-auto mb-4">
+                <template v-if="Array.isArray(ui.curapp.settings)">
+                  <v-subheader v-if="Array.isArray(ui.curapp.settings)">
+                    应用设置 ({{ ui.curapp.settings.length }})
+                  </v-subheader>
+                  <v-form class="pl-4 pr-4">
+                    <template v-for="(setting, settingIdx) in ui.curapp.settings">
+                      <v-text-field :label="setting.name" v-model="setting.val" :hint="setting.desc" v-if="setting.type === 'text'"></v-text-field>
+                      <v-slider :label="setting.name" v-model="setting.val" :hint="setting.desc" :min="setting.min" :max="setting.max" thumb-label="always" v-else-if="setting.type === 'slider'"></v-slider>
+                      <v-switch :label="setting.name" v-model="setting.val" :hint="setting.desc" v-else-if="setting.type === 'boolean'"></v-switch>
+                    </template>
+                  </v-form>
+                  <v-divider></v-divider>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn small text color="success" @click="onSaveSettings">保存设置</v-btn>
+                  </v-card-actions>
+                </template>
+              </v-card>
               <v-card class="mx-auto">
                 <v-subheader>
                   当前会话 ({{ ui.curapp.datas.length }})
@@ -369,6 +466,11 @@ function printHtml(data, curapp = null) {
                     <v-list-item-title>{{ data.key }}</v-list-item-title>
                     <v-list-item-subtitle>{{ data.val ? data.val : '无数据!' }}</v-list-item-subtitle>
                   </v-list-item-content>
+                  <v-list-item-action>
+                    <v-btn icon @click.stop="onClearCurAppSessionData(ui.curapp, ui.curapp.datas, data)">
+                      <v-icon color="grey darken-1">mdi-close</v-icon>
+                    </v-btn>
+                  </v-list-item-action>
                 </v-list-item>
                 <v-divider></v-divider>
                 <v-card-actions>
@@ -379,17 +481,6 @@ function printHtml(data, curapp = null) {
               <v-card class="ml-10 mt-4" v-for="(session, sessionIdx) in ui.curappSessions" :key="session.id">
                 <v-subheader>
                   #{{ sessionIdx + 1 }} {{ session.name }}
-                  <v-spacer></v-spacer>
-                  <v-menu bottom left>
-                    <template v-slot:activator="{ on }">
-                      <v-btn icon v-on="on"><v-icon>mdi-dots-vertical</v-icon></v-btn>
-                    </template>
-                    <v-list>
-                      <v-list-item @click="" v-clipboard:copy="JSON.stringify(session)" v-clipboard:success="onCopy">
-                        <v-list-item-title>复制会话</v-list-item-title>
-                      </v-list-item>
-                    </v-list>
-                  </v-menu>
                 </v-subheader>
                 <v-list-item two-line dense v-for="(data, dataIdx) in session.datas" :key="dataIdx">
                   <v-list-item-content>
@@ -399,7 +490,7 @@ function printHtml(data, curapp = null) {
                 </v-list-item>
                 <v-divider></v-divider>
                 <v-card-actions>
-                  <v-btn x-small text color="grey">{{ session.createTime }}</v-btn>
+                  <v-btn small text color="grey">{{ session.createTime }}</v-btn>
                   <v-spacer></v-spacer>
                   <v-btn small text color="error" @click="onDelSession(session)">删除</v-btn>
                   <v-btn small text color="success" @click="onUseSession(session)">应用</v-btn>
@@ -414,16 +505,22 @@ function printHtml(data, curapp = null) {
               </v-snackbar>
               <v-dialog v-model="ui.impSessionDialog.show" scrollable>
                 <v-card>
-                  <v-card-title>导入会话</v-card-title>
+                  <v-card-title>
+                    导入会话
+                    <v-spacer></v-spacer>
+                    <v-btn text small class="mr-n4" color="red darken-1" @click="ui.impSessionDialog.impval = ''">清空</v-btn>
+                  </v-card-title>
                   <v-divider></v-divider>
                   <v-card-text>
-                    <v-textarea autofocus auto-grow v-model="ui.impSessionDialog.impval" label="会话数据 (JSON)" hint="请粘贴 JSON 格式的会话数据! 你可以通过 复制会话 获得数据."></v-textarea>
+                    <v-textarea clearable auto-grow v-model="ui.impSessionDialog.impval" label="会话数据 (JSON)" hint="请粘贴 JSON 格式的会话数据! 你可以通过 复制会话 获得数据."></v-textarea>
                   </v-card-text>
                   <v-divider></v-divider>
                   <v-card-actions>
+                    <v-btn text small @click="" v-clipboard:copy="ui.impSessionDialog.impval" v-clipboard:success="onCopy">复制</v-btn>
+                    <v-btn text small @click="onImpSessionPaste">粘粘</v-btn>
                     <v-spacer></v-spacer>
-                    <v-btn text color="grey darken-1" text @click="ui.impSessionDialog.show = false">取消</v-btn>
-                    <v-btn text color="success darken-1" text @click="onImpSession">导入</v-btn>
+                    <v-btn text small color="grey darken-1" text @click="ui.impSessionDialog.show = false">取消</v-btn>
+                    <v-btn text small color="success darken-1" text @click="onImpSession">导入</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
@@ -500,6 +597,10 @@ function printHtml(data, curapp = null) {
               history.pushState(state, '', '/app/' + this.ui.curapp.id)
               document.title = state.title
             },
+            onClearCurAppSessionData(app, datas, data) {
+              data.val = ''
+              axios.post('/api', JSON.stringify({ cmd: 'saveCurAppSession', val: app }))
+            },
             onSaveSession() {
               const session = {
                 id: uuidv4(),
@@ -513,6 +614,15 @@ function printHtml(data, curapp = null) {
               this.box.sessions.push(session)
               this.ui.curappSessions.push(session)
               axios.post('/api', JSON.stringify({ cmd: 'saveSession', val: session }))
+            },
+            onSaveSettings() {
+              axios.post('/api', JSON.stringify({ cmd: 'saveSettings', val: this.ui.curapp.settings }))
+            },
+            onImpSessionPaste() {
+              navigator.clipboard.readText().then((text) => {
+                this.ui.impSessionDialog.impval = ''
+                this.ui.impSessionDialog.impval = text
+              });
             },
             onImpSession() {
               const impjson = this.ui.impSessionDialog.impval
@@ -549,7 +659,7 @@ function printHtml(data, curapp = null) {
             },
             onUseSession(session) {
               axios.post('/api', JSON.stringify({ cmd: 'useSession', val: session }))
-              this.ui.curapp.datas = session.datas
+              this.ui.curapp.datas = JSON.parse(JSON.stringify(session.datas))
             },
             onCopy(e) {
               this.ui.snackbar.show = true
@@ -573,4 +683,4 @@ function printJson() {
 }
 
 // prettier-ignore
-function Env(t){this.name=t,this.logs=[],this.isSurge=(()=>"undefined"!=typeof $httpClient),this.isQuanX=(()=>"undefined"!=typeof $task),this.log=((...t)=>{this.logs=[...this.logs,...t],t?console.log(t.join("\n")):console.log(this.logs.join("\n"))}),this.msg=((t=this.name,s="",i="")=>{this.isSurge()&&$notification.post(t,s,i),this.isQuanX()&&$notify(t,s,i),this.log("==============\ud83d\udce3\u7cfb\u7edf\u901a\u77e5\ud83d\udce3=============="),t&&this.log(t),s&&this.log(s),i&&this.log(i)}),this.getdata=(t=>this.isSurge()?$persistentStore.read(t):this.isQuanX()?$prefs.valueForKey(t):void 0),this.setdata=((t,s)=>this.isSurge()?$persistentStore.write(t,s):this.isQuanX()?$prefs.setValueForKey(t,s):void 0),this.get=((t,s)=>this.send(t,"GET",s)),this.wait=((t,s=t)=>i=>setTimeout(()=>i(),Math.floor(Math.random()*(s-t+1)+t))),this.post=((t,s)=>this.send(t,"POST",s)),this.send=((t,s,i)=>{if(this.isSurge()){const e="POST"==s?$httpClient.post:$httpClient.get;e(t,(t,s,e)=>{s&&(s.body=e,s.statusCode=s.status),i(t,s,e)})}this.isQuanX()&&(t.method=s,$task.fetch(t).then(t=>{t.status=t.statusCode,i(null,t,t.body)},t=>i(t.error,t,t)))}),this.done=((t={})=>$done(t))}
+function Env(t){this.name=t,this.logs=[],this.isSurge=(()=>"undefined"!=typeof $httpClient),this.isQuanX=(()=>"undefined"!=typeof $task),this.log=((...t)=>{this.logs=[...this.logs,...t],t?console.log(t.join("\n")):console.log(this.logs.join("\n"))}),this.msg=((t=this.name,s="",i="")=>{this.isSurge()&&$notification.post(t,s,i),this.isQuanX()&&$notify(t,s,i);const e=["","==============\ud83d\udce3\u7cfb\u7edf\u901a\u77e5\ud83d\udce3=============="];t&&e.push(t),s&&e.push(s),i&&e.push(i),console.log(e.join("\n"))}),this.getdata=(t=>this.isSurge()?$persistentStore.read(t):this.isQuanX()?$prefs.valueForKey(t):void 0),this.setdata=((t,s)=>this.isSurge()?$persistentStore.write(t,s):this.isQuanX()?$prefs.setValueForKey(t,s):void 0),this.get=((t,s)=>this.send(t,"GET",s)),this.wait=((t,s=t)=>i=>setTimeout(()=>i(),Math.floor(Math.random()*(s-t+1)+t))),this.post=((t,s)=>this.send(t,"POST",s)),this.send=((t,s,i)=>{if(this.isSurge()){const e="POST"==s?$httpClient.post:$httpClient.get;e(t,(t,s,e)=>{s&&(s.body=e,s.statusCode=s.status),i(t,s,e)})}this.isQuanX()&&(t.method=s,$task.fetch(t).then(t=>{t.status=t.statusCode,i(null,t,t.body)},t=>i(t.error,t,t)))}),this.done=((t={})=>$done(t))}

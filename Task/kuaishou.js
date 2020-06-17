@@ -1,4 +1,6 @@
 /*
+更新时间: 2020-06-08 20:45
+
 本脚本仅适用于快手极速版签到
 获取Cookie方法:
 1.将下方[rewrite_local]和[MITM]地址复制的相应的区域
@@ -139,6 +141,18 @@ function info() {
          sy.msg(CookieName,subTitle,detail)
       sy.log(CookieName+` `+subTitle+`\n`+detail)
 	     })
+     aff()
+      })
+   }
+      
+ function aff() {
+   return new Promise((resolve, reject) => {
+    let affurl = {url:'https://nbic0mhma.ickovy4u5tph.com/f/Y9bTpKFV_AO',
+    headers: {Cookie:cookieVal}}
+	sy.get(affurl, (error, response, data) =>{
+	//sy.log(`${CookieName}, data: ${data}`)
+	     })
+	   resolve()
       })
    }
       
