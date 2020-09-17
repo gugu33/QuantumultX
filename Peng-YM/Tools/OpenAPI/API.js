@@ -4,12 +4,22 @@ function ENV() {
   const isSurge = typeof $httpClient != "undefined" && !this.isLoon;
   const isJSBox = typeof require == "function" && typeof $jsbox != "undefined";
   const isNode = typeof require == "function" && !isJSBox;
+<<<<<<< HEAD
 
   return { isQX, isLoon, isSurge, isNode, isJSBox };
 }
 
 function HTTP(baseURL, defaultOptions = {}) {
   const { isQX, isLoon, isSurge } = ENV();
+=======
+  const isRequest = typeof $request !== "undefined";
+  const isScriptable = typeof importModule !== "undefined";
+  return { isQX, isLoon, isSurge, isNode, isJSBox, isRequest, isScriptable };
+}
+
+function HTTP(baseURL, defaultOptions = {}) {
+  const { isQX, isLoon, isSurge, isScriptable, isNode} = ENV();
+>>>>>>> upstream/master
   const methods = ["GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS", "PATCH"];
 
   function send(method, options) {
@@ -31,9 +41,15 @@ function HTTP(baseURL, defaultOptions = {}) {
     let worker;
     if (isQX) {
       worker = $task.fetch({ method, ...options });
+<<<<<<< HEAD
     } else {
       worker = new Promise((resolve, reject) => {
         const request = isSurge || isLoon ? $httpClient : require("request");
+=======
+    } else if (isLoon || isSurge || isNode){
+      worker = new Promise((resolve, reject) => {
+        const request = isNode ? require("request") : $httpClient;
+>>>>>>> upstream/master
         request[method.toLowerCase()](options, (err, response, body) => {
           if (err) reject(err);
           else
@@ -43,8 +59,27 @@ function HTTP(baseURL, defaultOptions = {}) {
               body,
             });
         });
+<<<<<<< HEAD
       });
     }
+=======
+      }) 
+    } else if (isScriptable) {
+      const request = new Request(options.url);
+      request.method = method;
+      request.headers = options.headers;
+      request.body = options.body;
+      worker = new Promise((resolve, reject) => {
+        request.loadString().then(body => {
+            resolve({
+                statusCode: request.response.statusCode,
+                headers: request.response.headers,
+                body
+            });
+        }).catch(err => reject(err));
+      });
+    };
+>>>>>>> upstream/master
 
     let timeoutid;
     const timer = timeout
@@ -77,7 +112,11 @@ function HTTP(baseURL, defaultOptions = {}) {
 }
 
 function API(name = "untitled", debug = false) {
+<<<<<<< HEAD
   const { isQX, isLoon, isSurge, isNode, isJSBox } = ENV();
+=======
+  const { isQX, isLoon, isSurge, isNode, isJSBox, isScriptable } = ENV();
+>>>>>>> upstream/master
   return new (class {
     constructor(name, debug) {
       this.name = name;
@@ -209,20 +248,31 @@ function API(name = "untitled", debug = false) {
 
     delete(key) {
       this.log(`DELETE ${key}`);
+<<<<<<< HEAD
       delete this.cache[key];
+=======
+>>>>>>> upstream/master
       if (key.indexOf("#") !== -1) {
         key = key.substr(1);
         if (isSurge & isLoon) {
           $persistentStore.write(null, key);
         }
         if (isQX) {
+<<<<<<< HEAD
           $prefs.setValueForKey(null, key);
+=======
+          $prefs.removeValueForKey(key);
+>>>>>>> upstream/master
         }
         if (isNode) {
           delete this.root[key];
         }
       } else {
+<<<<<<< HEAD
         this.cache[key] = data;
+=======
+        delete this.cache[key];
+>>>>>>> upstream/master
       }
       this.persistCache();
     }
@@ -240,7 +290,11 @@ function API(name = "untitled", debug = false) {
       if (isQX) $notify(title, subtitle, content, options);
       if (isSurge) $notification.post(title, subtitle, content_);
       if (isLoon) $notification.post(title, subtitle, content, openURL);
+<<<<<<< HEAD
       if (isNode) {
+=======
+      if (isNode || isScriptable) {
+>>>>>>> upstream/master
         if (isJSBox) {
           const push = require("push");
           push.schedule({

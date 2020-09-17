@@ -1,7 +1,11 @@
 /*
 爱奇艺会员签到脚本
 
+<<<<<<< HEAD
 更新时间: 2020.8.5 17:00
+=======
+更新时间: 2020.8.30
+>>>>>>> upstream/master
 脚本兼容: QuantumultX, Surge4, Loon, JsBox, Node.js
 电报频道: @NobyDa
 问题反馈: @NobyDa_bot
@@ -14,24 +18,32 @@
 如果使用Node.js, 需自行安装'request'模块. 例: npm install request -g
 
 JsBox, Node.js用户抓取Cookie说明：
+<<<<<<< HEAD
 开启抓包, 打开爱奇艺App后(AppStore中国区)，点击"我的" 返回抓包App 搜索url关键字: authcookie= 提取字母数字混合字段, 到&结束, 填入以下单引号内即可.
+=======
+开启抓包, 打开爱奇艺App后(AppStore中国区)，点击"我的" 返回抓包App 搜索url关键字: psp_cki= 提取字母数字混合字段, 到&结束, 填入以下单引号内即可.
+>>>>>>> upstream/master
 */
 
 var cookie = ''
 
 /*********************
+<<<<<<< HEAD
 QuantumultX 本地脚本配置:
+=======
+QuantumultX 远程脚本配置:
+>>>>>>> upstream/master
 **********************
 [task_local]
 # 爱奇艺会员签到
-0 9 * * * iQIYI.js
+0 9 * * * https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js
 
 [rewrite_local]
 # 获取Cookie
-https?:\/\/.*\.iqiyi\.com\/.*authcookie= url script-request-header iQIYI.js
+^https:\/\/iface\d\.iqiyi\.com\/.+?psp_cki= url script-request-header https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js
 
 [mitm] 
-hostname= *.iqiyi.com
+hostname= iface?.iqiyi.com
 
 **********************
 Surge 4.2.0+ 脚本配置:
@@ -39,10 +51,10 @@ Surge 4.2.0+ 脚本配置:
 [Script]
 爱奇艺签到 = type=cron,cronexp=0 9 * * *,script-path=https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js
 
-爱奇艺获取Cookie = type=http-request,pattern=https?:\/\/.*\.iqiyi\.com\/.*authcookie=,script-path=https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js
+爱奇艺获取Cookie = type=http-request,pattern=^https:\/\/iface\d\.iqiyi\.com\/.+?psp_cki=,script-path=https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js
 
 [MITM] 
-hostname= *.iqiyi.com
+hostname= iface?.iqiyi.com
 
 ************************
 Loon 2.1.0+ 脚本配置:
@@ -53,10 +65,10 @@ Loon 2.1.0+ 脚本配置:
 cron "0 9 * * *" script-path=https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js
 
 # 获取Cookie
-http-request https?:\/\/.*\.iqiyi\.com\/.*authcookie= script-path=https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js
+http-request ^https:\/\/iface\d\.iqiyi\.com\/.+?psp_cki= script-path=https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js
 
 [Mitm] 
-hostname= *.iqiyi.com
+hostname= iface?.iqiyi.com
 
 */
 
@@ -183,7 +195,11 @@ function Lottery(s) {
 }
 
 function GetCookie() {
+<<<<<<< HEAD
   var iQIYI = $request.url.match(/authcookie=([A-Za-z0-9]+)/);
+=======
+  var iQIYI = $request.url.match(/psp_cki=([A-Za-z0-9]+)/);
+>>>>>>> upstream/master
   if (iQIYI) {
     if ($nobyda.read("CookieQY")) {
       if ($nobyda.read("CookieQY") != iQIYI[1]) {
@@ -295,7 +311,7 @@ function nobyda() {
     return console.log('\n签到用时: ' + end + ' 秒')
   }
   const done = (value = {}) => {
-    if (isQuanX) isRequest ? $done(value) : null
+    if (isQuanX) return $done(value)
     if (isSurge) isRequest ? $done(value) : $done()
   }
   return {

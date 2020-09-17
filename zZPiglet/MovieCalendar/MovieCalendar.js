@@ -28,7 +28,11 @@ Author：zZPiglet
 
 Quantumult X:
 [task_local]
+<<<<<<< HEAD
 0 * * * * https://raw.githubusercontent.com/zZPiglet/Task/master/MovieCalendar/MovieCalendar.js, tag=电影日历
+=======
+0 7 * * * https://raw.githubusercontent.com/zZPiglet/Task/master/MovieCalendar/MovieCalendar.js, tag=电影日历
+>>>>>>> upstream/master
 
 [rewrite_local]
 ^https:\/\/frodo\.douban\.com\/api\/v\d\/calendar\/today url script-request-header https://raw.githubusercontent.com/zZPiglet/Task/master/MovieCalendar/MovieCalendar.js
@@ -36,7 +40,11 @@ Quantumult X:
 
 Surge & Loon:
 [Script]
+<<<<<<< HEAD
 cron "0 * * * *" script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/MovieCalendar/MovieCalendar.js
+=======
+cron "0 7 * * *" script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/MovieCalendar/MovieCalendar.js
+>>>>>>> upstream/master
 http-request ^https:\/\/frodo\.douban\.com\/api\/v\d\/calendar\/today script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/MovieCalendar/MovieCalendar.js
 
 All app:
@@ -67,7 +75,12 @@ if ($.client == "Safari") {
 } else if ($.client == "douban") {
     $.openlink = "douban://douban.com/movie/";
 }
+<<<<<<< HEAD
 $.log($.client+" "+$.pic)
+=======
+const boxhost = $.read("#boxjs_host") || "http://boxjs.com";
+$.diylink = $.read("diylink") || boxhost + "/app/zZ.Douban"; 
+>>>>>>> upstream/master
 
 if ($.isRequest) {
     getAPIKey();
@@ -88,12 +101,21 @@ if ($.isRequest) {
         }
     })().catch((err) => {
         if (err instanceof ERR.APIKeyError) {
+<<<<<<< HEAD
             $.notify("电影日历 - APIKey 错误", "", err.message, "http://boxjs.com/app/zZ.Douban");
         } else if (err instanceof ERR.bodyError) {
             $.notify("电影日历 - 返回错误", "", err.message);
         } else {
             $.notify("电影日历 - 出现错误", "", err.message);
             $.error(err);
+=======
+            $.notify("电影日历 - APIKey 错误", "", err.message, boxhost + "/app/zZ.Douban");
+        } else if (err instanceof ERR.bodyError) {
+            $.notify("电影日历 - 返回错误", "", err.message);
+        } else {
+            $.notify("电影日历 - 出现错误", "", JSON.stringify(err));
+            $.error(JSON.stringify(err));
+>>>>>>> upstream/master
         }
     }).finally($.done())
 }
@@ -171,9 +193,16 @@ async function notify() {
         } else if ($.pic == "trailer") {
             imgurl = $.trailer;
         }
+<<<<<<< HEAD
         $.notify(Title, subTitle, detail, openurl, imgurl)
     } else {
         $.notify("电影日历 - 出现错误", "", "接口返回错误，超出重试次数。")
+=======
+        if ($.client = "diy") openurl = $.diylink; 
+        $.notify(Title, subTitle, detail, openurl, imgurl)
+    } else {
+        $.notify("电影日历 - 出现错误", "", "接口返回错误，超出重试次数。\n或签名加密错误，请等待解决。")
+>>>>>>> upstream/master
     }
 }
 

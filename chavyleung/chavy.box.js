@@ -7,6 +7,18 @@ $.KEY_versions = 'chavy_boxjs_versions'
 $.KEY_userCfgs = 'chavy_boxjs_userCfgs'
 $.KEY_globalBaks = 'chavy_boxjs_globalBaks'
 $.KEY_curSessions = 'chavy_boxjs_cur_sessions'
+<<<<<<< HEAD
+=======
+
+/**
+ * ===================================
+ * 持久化属性: BoxJs 公开的数据结构
+ * ===================================
+ */
+
+// 存储用户访问`BoxJs`时使用的域名
+$.KEY_boxjs_host = 'boxjs_host'
+>>>>>>> upstream/master
 
 $.json = $.name
 $.html = $.name
@@ -51,6 +63,8 @@ $.html = $.name
     $.logErr(e)
   })
   .finally(() => {
+    // 记录当前使用哪个域名访问
+    $.setdata(getHost($request.url), $.KEY_boxjs_host)
     if ($.isapi) {
       $.done({ body: $.json })
     } else {
@@ -65,14 +79,30 @@ $.html = $.name
   })
 
 /**
+ * http://boxjs.com/ => `http://boxjs.com`
+ * http://boxjs.com/app/jd => `http://boxjs.com`
+ */
+function getHost(url) {
+  return url.slice(0, url.indexOf('/', 8))
+}
+
+/**
  * https://dns.google/ => ``
  * https://dns.google/api => `/api`
  */
 function getPath(url) {
+<<<<<<< HEAD
   // 如果以`/`结尾, 先去掉最后一个`/`
   const fullpath = /\/$/.test(url) ? url.replace(/\/$/, '') : url
   const [, domain] = /https?:\/\/(.*?)\/.*/.exec($request.url)
   return new RegExp(domain).test(url) ? fullpath.split(domain)[1] : undefined
+=======
+  // 如果以`/`结尾, 去掉最后一个`/`
+  const end = url.lastIndexOf('/') === url.length - 1 ? -1 : undefined
+  // slice第二个参数传 undefined 会直接截到最后
+  // indexOf第二个参数用来跳过前面的 "https://"
+  return url.slice(url.indexOf('/', 8), end)
+>>>>>>> upstream/master
 }
 
 function getSystemCfgs() {
@@ -81,6 +111,7 @@ function getSystemCfgs() {
     version: $.version,
     versionType: $.versionType,
     envs: [
+<<<<<<< HEAD
       { id: 'Surge', icons: ['https://raw.githubusercontent.com/Orz-3/mini/none/surge.png', 'https://raw.githubusercontent.com/Orz-3/task/master/surge.png'] },
       { id: 'QuanX', icons: ['https://raw.githubusercontent.com/Orz-3/mini/none/quanX.png', 'https://raw.githubusercontent.com/Orz-3/task/master/quantumultx.png'] },
       { id: 'Loon', icons: ['https://raw.githubusercontent.com/Orz-3/mini/none/loon.png', 'https://raw.githubusercontent.com/Orz-3/task/master/loon.png'] }
@@ -89,6 +120,44 @@ function getSystemCfgs() {
     senku: { id: 'GideonSenku', icon: 'https://avatars1.githubusercontent.com/u/39037656', repo: 'https://github.com/GideonSenku' },
     orz3: { id: 'Orz-3', icon: 'https://raw.githubusercontent.com/Orz-3/task/master/Orz-3.png', repo: 'https://github.com/Orz-3/' },
     boxjs: { id: 'BoxJs', show: false, icon: 'https://raw.githubusercontent.com/Orz-3/task/master/box.png', icons: ['https://raw.githubusercontent.com/Orz-3/mini/master/box.png', 'https://raw.githubusercontent.com/Orz-3/task/master/box.png'], repo: 'https://github.com/chavyleung/scripts' },
+=======
+      {
+        id: 'Surge',
+        icons: [
+          'https://raw.githubusercontent.com/Orz-3/mini/none/surge.png',
+          'https://raw.githubusercontent.com/Orz-3/task/master/surge.png'
+        ]
+      },
+      {
+        id: 'QuanX',
+        icons: [
+          'https://raw.githubusercontent.com/Orz-3/mini/none/quanX.png',
+          'https://raw.githubusercontent.com/Orz-3/task/master/quantumultx.png'
+        ]
+      },
+      {
+        id: 'Loon',
+        icons: [
+          'https://raw.githubusercontent.com/Orz-3/mini/none/loon.png',
+          'https://raw.githubusercontent.com/Orz-3/task/master/loon.png'
+        ]
+      }
+    ],
+    chavy: {
+      id: 'Chavy Scripts',
+      icon: 'https://avatars3.githubusercontent.com/u/29748519',
+      repo: 'https://github.com/chavyleung/scripts'
+    },
+    senku: { id: 'GideonSenku', icon: 'https://avatars1.githubusercontent.com/u/39037656', repo: 'https://github.com/GideonSenku' },
+    orz3: { id: 'Orz-3', icon: 'https://raw.githubusercontent.com/Orz-3/task/master/Orz-3.png', repo: 'https://github.com/Orz-3/' },
+    boxjs: {
+      id: 'BoxJs',
+      show: false,
+      icon: 'https://raw.githubusercontent.com/Orz-3/task/master/box.png',
+      icons: ['https://raw.githubusercontent.com/Orz-3/mini/master/box.png', 'https://raw.githubusercontent.com/Orz-3/task/master/box.png'],
+      repo: 'https://github.com/chavyleung/scripts'
+    },
+>>>>>>> upstream/master
     contributors: []
   }
 }
@@ -101,14 +170,41 @@ function getSystemApps() {
       descs: ['可设置 http-api 地址 & 超时时间 (Surge TF)', '可设置明暗两种主题下的主色调'],
       keys: ['@chavy_boxjs_userCfgs.httpapi', '@chavy_boxjs_userCfgs.color_dark_primary', '@chavy_boxjs_userCfgs.color_light_primary'],
       settings: [
+<<<<<<< HEAD
         { id: '@chavy_boxjs_userCfgs.httpapis', name: 'HTTP-API (Surge TF)', val: '', type: 'textarea', placeholder: ',examplekey@127.0.0.1:6166', autoGrow: true, rows: 2, desc: '示例: ,examplekey@127.0.0.1:6166! 注意: 以逗号开头, 逗号分隔多个地址, 可加回车' },
         { id: '@chavy_boxjs_userCfgs.httpapi_timeout', name: 'HTTP-API Timeout (Surge TF)', val: 20, type: 'number', desc: '如果脚本作者指定了超时时间, 会优先使用脚本指定的超时时间.' },
+=======
+        {
+          id: '@chavy_boxjs_userCfgs.httpapis',
+          name: 'HTTP-API (Surge TF)',
+          val: '',
+          type: 'textarea',
+          placeholder: ',examplekey@127.0.0.1:6166',
+          autoGrow: true,
+          rows: 2,
+          desc: '示例: ,examplekey@127.0.0.1:6166! 注意: 以逗号开头, 逗号分隔多个地址, 可加回车'
+        },
+        {
+          id: '@chavy_boxjs_userCfgs.httpapi_timeout',
+          name: 'HTTP-API Timeout (Surge TF)',
+          val: 20,
+          type: 'number',
+          desc: '如果脚本作者指定了超时时间, 会优先使用脚本指定的超时时间.'
+        },
+>>>>>>> upstream/master
         { id: '@chavy_boxjs_userCfgs.color_light_primary', name: '明亮色调', canvas: true, val: '#F7BB0E', type: 'colorpicker', desc: '' },
         { id: '@chavy_boxjs_userCfgs.color_dark_primary', name: '暗黑色调', canvas: true, val: '#2196F3', type: 'colorpicker', desc: '' }
       ],
       author: '@chavyleung',
       repo: 'https://github.com/chavyleung/scripts/blob/master/box/switcher/box.switcher.js',
+<<<<<<< HEAD
       icons: ['https://raw.githubusercontent.com/chavyleung/scripts/master/box/icons/BoxSetting.mini.png', 'https://raw.githubusercontent.com/chavyleung/scripts/master/box/icons/BoxSetting.png']
+=======
+      icons: [
+        'https://raw.githubusercontent.com/chavyleung/scripts/master/box/icons/BoxSetting.mini.png',
+        'https://raw.githubusercontent.com/chavyleung/scripts/master/box/icons/BoxSetting.png'
+      ]
+>>>>>>> upstream/master
     },
     {
       id: 'BoxSwitcher',
@@ -118,7 +214,14 @@ function getSystemApps() {
       settings: [{ id: 'CFG_BoxSwitcher_isSilent', name: '静默运行', val: false, type: 'boolean', desc: '切换会话时不发出系统通知!' }],
       author: '@chavyleung',
       repo: 'https://github.com/chavyleung/scripts/blob/master/box/switcher/box.switcher.js',
+<<<<<<< HEAD
       icons: ['https://raw.githubusercontent.com/chavyleung/scripts/master/box/icons/BoxSwitcher.mini.png', 'https://raw.githubusercontent.com/chavyleung/scripts/master/box/icons/BoxSwitcher.png'],
+=======
+      icons: [
+        'https://raw.githubusercontent.com/chavyleung/scripts/master/box/icons/BoxSwitcher.mini.png',
+        'https://raw.githubusercontent.com/chavyleung/scripts/master/box/icons/BoxSwitcher.png'
+      ],
+>>>>>>> upstream/master
       script: 'https://raw.githubusercontent.com/chavyleung/scripts/master/box/switcher/box.switcher.js'
     }
   ]
@@ -258,6 +361,7 @@ function getSessions() {
 function getCurSessions(appId) {
   const curSessionsstr = $.getdata($.KEY_curSessions)
   return ![undefined, null, 'null', ''].includes(curSessionsstr) ? JSON.parse(curSessionsstr) : {}
+<<<<<<< HEAD
 }
 
 async function getVersions() {
@@ -279,6 +383,29 @@ async function getVersions() {
   return vers
 }
 
+=======
+}
+
+async function getVersions() {
+  let vers = []
+  await new Promise((resolve) => {
+    setTimeout(resolve, 1000)
+    const verurl = `https://gitee.com/chavyleung/scripts/raw/master/box/release/box.release.json`
+    $.get({ url: verurl }, (err, resp, data) => {
+      try {
+        const _data = JSON.parse(data)
+        vers = Array.isArray(_data.releases) ? _data.releases : vers
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve()
+      }
+    })
+  })
+  return vers
+}
+
+>>>>>>> upstream/master
 async function handleApi() {
   const data = JSON.parse($request.body)
   // 保存会话
@@ -289,7 +416,50 @@ async function handleApi() {
     const savesuc = $.setdata(JSON.stringify(sessions), $.KEY_sessions)
     $.subt = `保存会话: ${savesuc ? '成功' : '失败'} (${session.appName})`
     $.desc = []
-    $.desc.push(`会话名称: ${session.name}`, `应用名称: ${session.appName}`, `会话编号: ${session.id}`, `应用编号: ${session.appId}`, `数据: ${JSON.stringify(session)}`)
+    $.desc.push(
+      `会话名称: ${session.name}`,
+      `应用名称: ${session.appName}`,
+      `会话编号: ${session.id}`,
+      `应用编号: ${session.appId}`,
+      `数据: ${JSON.stringify(session)}`
+    )
+    $.msg($.name, $.subt, $.desc.join('\n'))
+  }
+  // 保存至指定会话
+  else if (data.cmd === 'saveSessionTo') {
+    const { fromapp, toSession } = data.val
+    const sessions = getSessions()
+    const session = sessions.find((s) => s.id === toSession.id)
+    session.datas = fromapp.datas
+    const savesuc = $.setdata(JSON.stringify(sessions), $.KEY_sessions)
+    $.subt = `保存会话: ${savesuc ? '成功' : '失败'} (${session.appName})`
+    $.desc = []
+    $.desc.push(
+      `会话名称: ${session.name}`,
+      `应用名称: ${session.appName}`,
+      `会话编号: ${session.id}`,
+      `应用编号: ${session.appId}`,
+      `数据: ${JSON.stringify(session)}`
+    )
+    $.msg($.name, $.subt, $.desc.join('\n'))
+  }
+  // 修改指定会话
+  else if (data.cmd === 'onModSession') {
+    const sessiondat = data.val
+    const sessions = getSessions()
+    const session = sessions.find((s) => s.id === sessiondat.id)
+    session.name = sessiondat.name
+    session.datas = sessiondat.datas
+    const savesuc = $.setdata(JSON.stringify(sessions), $.KEY_sessions)
+    $.subt = `保存会话: ${savesuc ? '成功' : '失败'} (${session.appName})`
+    $.desc = []
+    $.desc.push(
+      `会话名称: ${session.name}`,
+      `应用名称: ${session.appName}`,
+      `会话编号: ${session.id}`,
+      `应用编号: ${session.appId}`,
+      `数据: ${JSON.stringify(session)}`
+    )
     $.msg($.name, $.subt, $.desc.join('\n'))
   }
   // 保存至指定会话
@@ -366,7 +536,13 @@ async function handleApi() {
       $.setdata(JSON.stringify(curSessions), $.KEY_curSessions)
       $.subt = `应用会话: 成功 (${session.appName})`
       $.desc = []
-      $.desc.push(`会话名称: ${session.name}`, `应用名称: ${session.appName}`, `会话编号: ${session.id}`, `应用编号: ${session.appId}`, `数据: ${JSON.stringify(session)}`)
+      $.desc.push(
+        `会话名称: ${session.name}`,
+        `应用名称: ${session.appName}`,
+        `会话编号: ${session.id}`,
+        `应用编号: ${session.appId}`,
+        `数据: ${JSON.stringify(session)}`
+      )
       $.msg($.name, $.subt, $.desc.join('\n'))
     }
   }
@@ -379,7 +555,13 @@ async function handleApi() {
       const delsuc = $.setdata(JSON.stringify(sessions), $.KEY_sessions) ? '成功' : '失败'
       $.subt = `删除会话: ${delsuc ? '成功' : '失败'} (${session.appName})`
       $.desc = []
-      $.desc.push(`会话名称: ${session.name}`, `会话编号: ${session.id}`, `应用名称: ${session.appName}`, `应用编号: ${session.appId}`, `数据: ${JSON.stringify(session)}`)
+      $.desc.push(
+        `会话名称: ${session.name}`,
+        `会话编号: ${session.id}`,
+        `应用名称: ${session.appName}`,
+        `应用编号: ${session.appId}`,
+        `数据: ${JSON.stringify(session)}`
+      )
       $.msg($.name, $.subt, $.desc.join('\n'))
     }
   }
@@ -566,6 +748,7 @@ async function handleRevert() {
 }
 
 function printRevertHtml() {
+<<<<<<< HEAD
   return `
   <!DOCTYPE html>
   <html lang="zh-CN">
@@ -583,6 +766,219 @@ function printRevertHtml() {
     </head>
     <body>
       <div id="app">
+        <v-app v-cloak>
+          <v-container>
+            <v-card class="mt-4">
+              <v-card-title>抹掉订阅缓存</v-card-title>
+              <v-card-text>
+                <p class="">该操作会抹掉: <font class="error--text">订阅缓存</font></p>
+                如果添加、更新了订阅后出现白屏现象, 可以尝试抹掉用户设置 <br />
+                注意: 该操作不会删掉订阅, 只会清空订阅缓存
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-dialog v-model="ui.revertSubCachesDialog.show" persistent max-width="290">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn small text color="error" v-on="on">抹掉</v-btn>
+                  </template>
+                  <v-card>
+                    <v-card-title class="headline">确定抹掉订阅?</v-card-title>
+                    <v-card-text>该操作不可逆, 请注意备份!</v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="grey darken-1" text @click="ui.revertSubCachesDialog.show = false">取消</v-btn>
+                      <v-btn color="green darken-1" text @click="revertSubCaches()">确定</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+              </v-card-actions>
+            </v-card>
+            <v-card class="mt-4">
+              <v-card-title>抹掉全局备份</v-card-title>
+              <v-card-text>
+                <p>该操作会抹掉: <font class="error--text">全局备份</font></p>
+                如果备份、导入备份后出现 VPN 断开重连现象, 可尝试抹掉所有备份
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-dialog v-model="ui.revertBaksDialog.show" persistent max-width="290">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn small text color="error" v-on="on">抹掉</v-btn>
+                  </template>
+                  <v-card>
+                    <v-card-title class="headline">确定抹掉备份?</v-card-title>
+                    <v-card-text>该操作不可逆, 请注意备份!</v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="grey darken-1" text @click="ui.revertBaksDialog.show = false">取消</v-btn>
+                      <v-btn color="green darken-1" text @click="revertBaks()">确定</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+              </v-card-actions>
+            </v-card>
+            <v-card class="mt-4">
+              <v-card-title>抹掉所有会话</v-card-title>
+              <v-card-text>
+                <p>该操作会抹掉: <font class="error--text">所有会话</font></p>
+                如果切换会话时出现不符预期现象, 可尝试抹掉所有会话
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-dialog v-model="ui.revertSessionsDialog.show" persistent max-width="290">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn small text color="error" v-on="on">抹掉</v-btn>
+                  </template>
+                  <v-card>
+                    <v-card-title class="headline">确定抹掉会话?</v-card-title>
+                    <v-card-text>该操作不可逆, 请注意备份!</v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="grey darken-1" text @click="ui.revertSessionsDialog.show = false">取消</v-btn>
+                      <v-btn color="green darken-1" text @click="revertSessions()">确定</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+              </v-card-actions>
+            </v-card>
+            <v-overlay v-model="ui.overlay.show" :opacity="0.7">
+              <v-progress-circular indeterminate size="64"></v-progress-circular>
+            </v-overlay>
+          </v-container>
+        </v-app>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/axios@0.19.2/dist/axios.min.js"></script>
+      <script>
+        new Vue({
+          el: '#app',
+          vuetify: new Vuetify({ theme: { dark: true } }),
+          data() {
+            return {
+              ui: {
+                overlay: { show: false },
+                revertSubCachesDialog: {show: false},
+                revertBaksDialog: {show: false},
+                revertSessionsDialog: {show: false}
+              }
+            }
+          },
+          computed: {
+          },
+          watch: {
+          },
+          methods: {
+            revertSubCaches: function() {
+              this.ui.revertSubCachesDialog.show = false
+              this.ui.overlay.show = true
+              axios.post('/api', JSON.stringify({ cmd: 'revertSubCaches', val: null })).finally(() => {
+                this.ui.overlay.show = false
+              })
+            },
+            revertBaks: function() {
+              this.ui.revertBaksDialog.show = false
+              this.ui.overlay.show = true
+              axios.post('/api', JSON.stringify({ cmd: 'revertBaks', val: null })).finally(() => {
+                this.ui.overlay.show = false
+              })
+            },
+            revertSessions: function() {
+              this.ui.revertSessionsDialog.show = false
+              this.ui.overlay.show = true
+              axios.post('/api', JSON.stringify({ cmd: 'revertSessions', val: null })).finally(() => {
+                this.ui.overlay.show = false
+              })
+            }
+          }
+        })
+      </script>
+    </body>
+  </html>
+  
+  `
+}
+
+function printHtml(data, appId = '', curview = 'app') {
+=======
+>>>>>>> upstream/master
+  return `
+  <!DOCTYPE html>
+  <html lang="zh-CN">
+    <head>
+      <title>BoxJs</title>
+      <meta charset="utf-8" />
+<<<<<<< HEAD
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+=======
+      <meta name="apple-mobile-web-app-capable" content="yes">
+>>>>>>> upstream/master
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+      <link rel="Bookmark" href="https://raw.githubusercontent.com/chavyleung/scripts/master/BOXJS.png" />
+      <link rel="shortcut icon" href="https://raw.githubusercontent.com/chavyleung/scripts/master/BOXJS.png" />
+      <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/chavyleung/scripts/master/BOXJS.png" />
+      <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet" />
+      <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet" />
+      <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet" />
+      <style>
+        [v-cloak] {
+          display: none;
+        }
+        body {
+          padding-top: constant(safe-area-inset-top) !important;
+          padding-top: env(safe-area-inset-top);
+        }
+        .text-pre-wrap {
+          white-space: pre-wrap !important;
+        }
+        .v-app-bar,
+        .v-navigation-drawer__content {
+          box-sizing: content-box;
+          padding-top: constant(safe-area-inset-top);
+          padding-top: env(safe-area-inset-top);
+        }
+        .v-app-bar .v-autocomplete {
+          box-sizing: border-box;
+        }
+        .v-bottom-navigation,
+        .v-bottom-sheet {
+          padding-bottom: constant(safe-area-inset-bottom);
+          padding-bottom: env(safe-area-inset-bottom);
+        }
+        .v-bottom-navigation {
+          box-sizing: content-box;
+        }
+        .v-bottom-navigation button {
+          box-sizing: border-box;
+        }
+        .v-main.safe {
+          margin-bottom: 56px;
+          margin-bottom: calc(56px + constant(safe-area-inset-bottom));
+          margin-bottom: calc(56px + env(safe-area-inset-bottom));
+        }
+        .v-main .v-main__wrap {
+          padding-bottom: 68px;
+          padding-bottom: calc(68px + constant(safe-area-inset-bottom));
+          padding-bottom: calc(68px + env(safe-area-inset-bottom));
+        }
+        .v-main.safe .v-main__wrap {
+          padding-bottom: 68px;
+        }
+        .v-speed-dial {
+          bottom: calc(12px + constant(safe-area-inset-bottom));
+          bottom: calc(12px + env(safe-area-inset-bottom));
+        }
+        .v-speed-dial.has-nav {
+          bottom: calc(68px + constant(safe-area-inset-bottom));
+          bottom: calc(68px + env(safe-area-inset-bottom));
+        }
+      </style>
+    </head>
+    <body>
+      <div id="app">
+<<<<<<< HEAD
+=======
         <v-app v-cloak>
           <v-container>
             <v-card class="mt-4">
@@ -788,6 +1184,7 @@ function printHtml(data, appId = '', curview = 'app') {
     </head>
     <body>
       <div id="app">
+>>>>>>> upstream/master
         <v-app v-scroll="onScroll" v-cloak>
           <v-app-bar app dense :color="darkMode || !window.navigator.standalone ? undefined : $vuetify.theme.themes.light.primary">
             <v-menu bottom left v-if="['app', 'home', 'log', 'sub'].includes(ui.curview) && box.syscfgs.env !== ''">
@@ -843,11 +1240,19 @@ function printHtml(data, appId = '', curview = 'app') {
               </template>
               <v-btn dark v-if="!box.usercfgs.isHideHelp" fab small color="grey" @click="ui.versheet.show = true">
                 <v-icon>mdi-help</v-icon>
+<<<<<<< HEAD
               </v-btn>
               <v-btn dark fab small color="pink" @click="box.usercfgs.isLeftBoxIcon = !box.usercfgs.isLeftBoxIcon, onUserCfgsChange()">
                 <v-icon v-if="!box.usercfgs.isLeftBoxIcon">mdi-format-horizontal-align-left</v-icon>
                 <v-icon v-else>mdi-format-horizontal-align-right</v-icon>
               </v-btn>
+=======
+              </v-btn>
+              <v-btn dark fab small color="pink" @click="box.usercfgs.isLeftBoxIcon = !box.usercfgs.isLeftBoxIcon, onUserCfgsChange()">
+                <v-icon v-if="!box.usercfgs.isLeftBoxIcon">mdi-format-horizontal-align-left</v-icon>
+                <v-icon v-else>mdi-format-horizontal-align-right</v-icon>
+              </v-btn>
+>>>>>>> upstream/master
               <v-btn dark fab small color="indigo" @click="ui.impGlobalBakDialog.show = true">
                 <v-icon>mdi-database-import</v-icon>
               </v-btn>
@@ -1778,6 +2183,22 @@ function printHtml(data, appId = '', curview = 'app') {
                   if (!this.fullscreen) {
                     history.pushState(state, '', '/my')
                   }
+<<<<<<< HEAD
+                }
+                this.$vuetify.goTo(newval === 'app' ? this.ui.scrollY : 0, {
+                  duration: 0,
+                  offset: 0
+                })
+              }
+            },
+            'ui.reloadConfirmDialog.sec': {
+              handler(newval, oldval) {
+                if (newval !== 0) {
+                  setTimeout(() => (this.ui.reloadConfirmDialog.sec -= 1), 1000)
+                } else {
+                  this.reload()
+=======
+>>>>>>> upstream/master
                 }
                 this.$vuetify.goTo(newval === 'app' ? this.ui.scrollY : 0, {
                   duration: 0,
@@ -1792,6 +2213,27 @@ function printHtml(data, appId = '', curview = 'app') {
                 } else {
                   this.reload()
                 }
+              }
+            },
+            'box.usercfgs.favapppanel': {
+              handler(newval, oldval) {
+                this.onUserCfgsChange()
+              }
+            },
+            'box.usercfgs.subapppanel': {
+              handler(newval, oldval) {
+                this.onUserCfgsChange()
+              }
+            },
+            'box.usercfgs.sysapppanel': {
+              handler(newval, oldval) {
+                this.onUserCfgsChange()
+              }
+            },
+            'box.usercfgs.theme': {
+              handler(newval, oldval) {
+                this.$vuetify.theme.dark = this.darkMode
+                this.onUserCfgsChange()
               }
             },
             'box.usercfgs.favapppanel': {

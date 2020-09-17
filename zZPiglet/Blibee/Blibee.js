@@ -88,7 +88,11 @@ async function Sign() {
             await signIn()
         }
         await receive()
+<<<<<<< HEAD
         await Valid()
+=======
+        await checkfinish()
+>>>>>>> upstream/master
         await finish()
         await result()
         await notify()
@@ -249,9 +253,35 @@ function receive() {
     })
 }
 
+<<<<<<< HEAD
 function finish() {
     return new Promise(resolve => {
         for (let task of datainfo.tasklist) {
+=======
+function checkfinish() {
+    return new Promise(resolve => {
+        const home = {
+            url: homeURL,
+            headers: datainfo.headers1,
+            body: '{"all":true,"page":{"pageSize":10,"pageNo":1}}'
+        }
+        $cmp.post(home, function (error, response, data) {
+            try{
+                const homeobj = JSON.parse(data)
+                datainfo.unfinishlist = homeobj.data.taskListVo.taskItemVos
+                resolve()
+            } catch (e) {
+                $cmp.notify(cookieName + "任务情况" + e.name + "‼️", JSON.stringify(e), e.message)
+                resolve()
+            }
+        })
+    })
+}
+
+function finish() {
+    return new Promise(resolve => {
+        for (let task of datainfo.unfinishlist) {
+>>>>>>> upstream/master
             let taskStatus = task.status
             let taskId = task.taskId
             let taskName = task.taskName
@@ -352,6 +382,7 @@ function notify() {
     })
 }
 
+<<<<<<< HEAD
 function compatibility() {
     const isRequest = typeof $request != "undefined"
     const isSurge = typeof $httpClient != "undefined"
@@ -457,3 +488,6 @@ function compatibility() {
     }
     return { isQuanX, isSurge, isJSBox, isRequest, notify, write, read, get, post, log, done }
 }
+=======
+function compatibility(){const e="undefined"!=typeof $request,t="undefined"!=typeof $httpClient,r="undefined"!=typeof $task,n="undefined"!=typeof $app&&"undefined"!=typeof $http,o="function"==typeof require&&!n,s=(()=>{if(o){const e=require("request");return{request:e}}return null})(),i=(e,s,i)=>{r&&$notify(e,s,i),t&&$notification.post(e,s,i),o&&a(e+s+i),n&&$push.schedule({title:e,body:s?s+"\n"+i:i})},u=(e,n)=>r?$prefs.setValueForKey(e,n):t?$persistentStore.write(e,n):void 0,d=e=>r?$prefs.valueForKey(e):t?$persistentStore.read(e):void 0,l=e=>(e&&(e.status?e.statusCode=e.status:e.statusCode&&(e.status=e.statusCode)),e),f=(e,i)=>{r&&("string"==typeof e&&(e={url:e}),e.method="GET",$task.fetch(e).then(e=>{i(null,l(e),e.body)},e=>i(e.error,null,null))),t&&$httpClient.get(e,(e,t,r)=>{i(e,l(t),r)}),o&&s.request(e,(e,t,r)=>{i(e,l(t),r)}),n&&("string"==typeof e&&(e={url:e}),e.header=e.headers,e.handler=function(e){let t=e.error;t&&(t=JSON.stringify(e.error));let r=e.data;"object"==typeof r&&(r=JSON.stringify(e.data)),i(t,l(e.response),r)},$http.get(e))},p=(e,i)=>{r&&("string"==typeof e&&(e={url:e}),e.method="POST",$task.fetch(e).then(e=>{i(null,l(e),e.body)},e=>i(e.error,null,null))),t&&$httpClient.post(e,(e,t,r)=>{i(e,l(t),r)}),o&&s.request.post(e,(e,t,r)=>{i(e,l(t),r)}),n&&("string"==typeof e&&(e={url:e}),e.header=e.headers,e.handler=function(e){let t=e.error;t&&(t=JSON.stringify(e.error));let r=e.data;"object"==typeof r&&(r=JSON.stringify(e.data)),i(t,l(e.response),r)},$http.post(e))},a=e=>console.log(e),y=(n={})=>{if(r)return $done(n);t&&(e?$done(n):$done())};return{isQuanX:r,isSurge:t,isJSBox:n,isRequest:e,notify:i,write:u,read:d,get:f,post:p,log:a,done:y}}
+>>>>>>> upstream/master

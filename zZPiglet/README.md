@@ -17,3 +17,11 @@ Telegram 随缘解答反馈处：[zZPiglet_bot](https://t.me/zZPiglet_bot)
 [@NobyDa](https://github.com/NobyDa)
 [@yichahucha](https://github.com/yichahucha)
 [@chavyleung](https://github.com/chavyleung)
+<<<<<<< HEAD
+=======
+[@Peng-YM](https://github.com/Peng-YM)
+
+## License
+
+[GPLv3](LICENSE)
+>>>>>>> upstream/master

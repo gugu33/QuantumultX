@@ -13,7 +13,16 @@
         "jd_fruit1",
         "jd_fruit2",
         "jd_fruit3",
+<<<<<<< HEAD
         "jd_fruit4"
+=======
+        "jd_fruit4",
+        "jd2_fruit_name",
+        "jd2_fruit1",
+        "jd2_fruit2",
+        "jd2_fruit3",
+        "jd2_fruit4"
+>>>>>>> upstream/master
       ],
       "settings": [
         {
@@ -25,35 +34,90 @@
         },
         {
           "id": "jd_fruit_name",
+<<<<<<< HEAD
           "name": "京东账号昵称",
+=======
+          "name": "京东账号一昵称",
+>>>>>>> upstream/master
           "val": "",
           "type": "text",
           "desc": "京东账号昵称,用于区分自己的京东账号(非必填，建议多个京东账号使用)"
         },
         {
           "id": "jd_fruit1",
+<<<<<<< HEAD
           "name": "互助码1",
+=======
+          "name": "账号一的互助码1",
+>>>>>>> upstream/master
           "val": "",
           "type": "text",
           "desc": "京东水果互助码.这是别人的shareCode,你帮别人助力."
         },
         {
           "id": "jd_fruit2",
+<<<<<<< HEAD
           "name": "互助码2",
+=======
+          "name": "账号一的互助码2",
+>>>>>>> upstream/master
           "val": "",
           "type": "text",
           "desc": "京东水果互助码."
         },
         {
           "id": "jd_fruit3",
+<<<<<<< HEAD
           "name": "互助码3",
+=======
+          "name": "账号一的互助码3",
+>>>>>>> upstream/master
           "val": "",
           "type": "text",
           "desc": "京东水果互助码.这是别人的shareCode,你帮别人助力."
         },
         {
           "id": "jd_fruit4",
+<<<<<<< HEAD
           "name": "互助码4",
+=======
+          "name": "账号一的互助码4",
+          "val": "",
+          "type": "text",
+          "desc": "京东水果互助码.这是别人的shareCode,你帮别人助力."
+        },
+        {
+          "id": "jd2_fruit_name",
+          "name": "京东账号二昵称",
+          "val": "",
+          "type": "text",
+          "desc": "京东账号昵称,用于区分自己的京东账号(非必填，建议多个京东账号使用)"
+        },
+        {
+          "id": "jd2_fruit1",
+          "name": "账号二的互助码1",
+          "val": "",
+          "type": "text",
+          "desc": "京东水果互助码.这是别人的shareCode,你帮别人助力."
+        },
+        {
+          "id": "jd2_fruit2",
+          "name": "账号二的互助码2",
+          "val": "",
+          "type": "text",
+          "desc": "京东水果互助码."
+        },
+        {
+          "id": "jd2_fruit3",
+          "name": "账号二的互助码3",
+          "val": "",
+          "type": "text",
+          "desc": "京东水果互助码.这是别人的shareCode,你帮别人助力."
+        },
+        {
+          "id": "jd2_fruit4",
+          "name": "账号二的互助码4",
+>>>>>>> upstream/master
           "val": "",
           "type": "text",
           "desc": "京东水果互助码.这是别人的shareCode,你帮别人助力."
@@ -64,7 +128,11 @@
       "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_fruit.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jdnc_mini.png",
+<<<<<<< HEAD
         "https://raw.githubusercontent.com/lxk0301/scripts/master/icon/jd_fruit.png"
+=======
+        "https://raw.githubusercontent.com/58xinian/icon/master/jdnc.png"
+>>>>>>> upstream/master
       ]
     },
     {
@@ -188,7 +256,11 @@
       "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_plantBean.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jdzd_mini.png",
+<<<<<<< HEAD
         "https://raw.githubusercontent.com/lxk0301/scripts/master/icon/jd_plantBean.png"
+=======
+        "https://raw.githubusercontent.com/58xinian/icon/master/jdzd.png"
+>>>>>>> upstream/master
       ]
     },
     {
@@ -204,6 +276,23 @@
           "desc": "运行宠汪汪脚本时不发出系统弹窗通知"
         },
         {
+<<<<<<< HEAD
+=======
+          "id": "jdJoyHelpFeed",
+          "name": "是否给好友喂食",
+          "val": false,
+          "type": "boolean",
+          "desc": "默认不帮好友喂食（给好友喂食可得积分，但会消耗自己狗粮）"
+        },
+        {
+          "id": "joyRunFlag",
+          "name": "参加双人赛跑(默认参加)",
+          "val": true,
+          "type": "boolean",
+          "desc": "开启脚本将会为您自动参加双人赛跑"
+        },
+        {
+>>>>>>> upstream/master
           "id": "joyFeedCount",
           "name": "每次喂养数量（默认10g）",
           "val": "10",
@@ -234,13 +323,18 @@
       "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jdcww_mini.png",
+<<<<<<< HEAD
         "https://raw.githubusercontent.com/lxk0301/scripts/master/icon/jd_joy.png"
+=======
+        "https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png"
+>>>>>>> upstream/master
       ]
     },
     {
       "id": "jd_Joy_Reawrd",
       "name": "宠汪汪积分兑换奖品",
       "keys": [],
+<<<<<<< HEAD
       "desc": "兑换京豆数量（默认兑换20京豆，选择其他数量请保证宠汪汪等级和积分满足相应条件）",
       "settings": [
         {
@@ -249,12 +343,22 @@
           "val": "20",
           "type": "radios",
           "desc": "选择兑换京豆数量(默认兑换20京豆)",
+=======
+      "settings": [
+        {
+          "id": "joyRewardName",
+          "name": "是否兑换京豆",
+          "val": "1",
+          "type": "radios",
+          "desc": "默认开启兑换，如不想兑换可选择不兑换",
+>>>>>>> upstream/master
           "items": [
             {
               "key": "0",
               "label": "不兑换奖品(选择此项将不兑换奖品)"
             },
             {
+<<<<<<< HEAD
               "key": "-1",
               "label": "随机兑换京豆(此选项会从多到少进行循环兑换京豆)"
             },
@@ -277,6 +381,10 @@
             {
               "key": "1000",
               "label": "兑换1000京豆(请保证宠汪汪等级和积分满足兑换1000京豆的条件)"
+=======
+              "key": "1",
+              "label": "兑换京豆"
+>>>>>>> upstream/master
             }
           ]
         }
@@ -286,7 +394,11 @@
       "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_reward.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jdcww_mini.png",
+<<<<<<< HEAD
         "https://raw.githubusercontent.com/lxk0301/scripts/master/icon/jd_joy.png"
+=======
+        "https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png"
+>>>>>>> upstream/master
       ]
     },
     {
@@ -314,7 +426,11 @@
       "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_moneyTree.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jdyqs_mini.png",
+<<<<<<< HEAD
         "https://raw.githubusercontent.com/lxk0301/scripts/master/icon/jd_moneyTree.png"
+=======
+        "https://raw.githubusercontent.com/58xinian/icon/master/jdyqs.png"
+>>>>>>> upstream/master
       ]
     },
     {
@@ -335,7 +451,11 @@
       "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_speed.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jdjs_mini.png",
+<<<<<<< HEAD
         "https://raw.githubusercontent.com/lxk0301/scripts/master/icon/jd_speed.png"
+=======
+        "https://raw.githubusercontent.com/58xinian/icon/master/jdjs.png"
+>>>>>>> upstream/master
       ]
     },
     {
@@ -389,6 +509,64 @@
         "https://raw.githubusercontent.com/Orz-3/mini/master/jd.png",
         "https://raw.githubusercontent.com/Orz-3/task/master/jd.png"
       ]
+<<<<<<< HEAD
+=======
+    },
+    {
+      "id": "jd_SuperMarket",
+      "name": "京小超",
+      "keys": [],
+      "settings": [
+        {
+          "id": "jdSuperMarketNotify",
+          "name": "静默运行",
+          "val": false,
+          "type": "boolean",
+          "desc": "运行此脚本时不发出系统弹窗通知"
+        },
+        {
+          "id": "coinToBeans",
+          "name": "兑换京豆数量（默认不兑换）",
+          "val": "0",
+          "type": "radios",
+          "desc": "选择兑换京豆数量(默认不兑换京豆)",
+          "items": [
+            {
+              "key": "0",
+              "label": "不兑换奖品(选择此项将不兑换)"
+            },
+            {
+              "key": "5",
+              "label": "兑换5京豆"
+            },
+            {
+              "key": "10",
+              "label": "兑换10京豆"
+            },
+            {
+              "key": "20",
+              "label": "兑换20京豆"
+            }
+          ]
+        }
+      ],
+      "author": "@lxk0301",
+      "repo": "https://github.com/lxk0301/scripts",
+      "scripts":[
+        {
+          "name" : "做任务收金币",
+          "script" : "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js"
+        },
+        {
+          "name" : "收蓝币兑京豆",
+          "script" : "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js"
+        }
+      ],
+      "icons": [
+        "https://raw.githubusercontent.com/58xinian/icon/master/jxc_mini.png",
+        "https://raw.githubusercontent.com/58xinian/icon/master/jxc.png"
+      ]
+>>>>>>> upstream/master
     }
   ]
 }

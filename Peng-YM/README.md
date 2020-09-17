@@ -7,7 +7,11 @@ Scripts for QuantumultX, Loon, Surge, JSBox and Node.
 
 |                             脚本                             |              作用               |   推荐配置   | 预览 |
 | :----------------------------------------------------------: | :-----------------------------: | :----------: | ------------------------------------------------------------ |
+<<<<<<< HEAD
 | [彩云天气](https://raw.githubusercontent.com/Peng-YM/QuanX/master/Tasks/caiyun.js) | 基于彩云天气API推送实时天气 | 30 8-22/* * * * | [DEMO](https://raw.githubusercontent.com/Peng-YM/QuanX/master/demos/caiyun.JPG) |
+=======
+| [彩云天气](https://raw.githubusercontent.com/Peng-YM/QuanX/master/Tasks/caiyun.js) | 基于彩云天气API推送实时天气 | 30 8-22 * * * | [DEMO](https://raw.githubusercontent.com/Peng-YM/QuanX/master/demos/caiyun.JPG) |
+>>>>>>> upstream/master
 | [纵横小说](https://raw.githubusercontent.com/Peng-YM/QuanX/master/Tasks/zongheng.js) |        监测纵横小说更新         | */30 * * * * | [DEMO](https://raw.githubusercontent.com/Peng-YM/QuanX/master/demos/zongheng.JPG) |
 | [Github](https://raw.githubusercontent.com/Peng-YM/QuanX/master/Tasks/github.js) | 监测Github仓库的Commit和Release |  0 9 * * *   | [DEMO](https://raw.githubusercontent.com/Peng-YM/QuanX/master/demos/github.JPG) |
 | [今日汇率](https://raw.githubusercontent.com/Peng-YM/QuanX/master/Tasks/exchange.js) | 汇率监控 |  0 9 * * *   | [DEMO](https://raw.githubusercontent.com/Peng-YM/QuanX/master/demos/exchange.JPG) |
@@ -35,4 +39,8 @@ Scripts for QuantumultX, Loon, Surge, JSBox and Node.
 
 ### Surge运行模式
 
+<<<<<<< HEAD
 网络变化时自动根据设定调整当前Surge的代理模式。[了解更多](https://raw.githubusercontent.com/Peng-YM/QuanX/master/Tools/RunningMode/running-mode.js)
+=======
+网络变化时自动根据设定调整当前Surge的代理模式。[了解更多](https://raw.githubusercontent.com/Peng-YM/QuanX/master/Tools/RunningMode/running-mode.js)
+>>>>>>> upstream/master

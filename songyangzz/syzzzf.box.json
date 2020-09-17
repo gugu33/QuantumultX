@@ -3,7 +3,11 @@
 	"name": "syzzzf应用订阅",
 	"author": "@syzzzf",
 	"icon": "",
+<<<<<<< HEAD
 	"repo": "https://github.com/songyangzz/QxScripts",
+=======
+	"repo": "https://github.com/songyangzz/QuantumultX",
+>>>>>>> upstream/master
 	"apps": [{
 			"id": "elemSign",
 			"name": "饿了么签到",
@@ -36,7 +40,11 @@
 				"desc": "false没有tf位置将不会通知只记录日志"
 			}],
 			"author": "@syzzzf",
+<<<<<<< HEAD
 			"repo": "https://raw.githubusercontent.com/songyangzz/QuantumultX/master/elem/elemSign.js",
+=======
+			"repo": "https://raw.githubusercontent.com/songyangzz/QuantumultX/master/testflight.js",
+>>>>>>> upstream/master
 			"icons": ["https://raw.githubusercontent.com/Orz-3/task/master/testflight.png", "https://raw.githubusercontent.com/Orz-3/task/master/testflight.png"]
 		}
 	]

@@ -77,15 +77,24 @@ function ToolKit(scriptName, scriptId, options) {
             //支持node命令，实现发送手机测试
             if (this.isNode()) {
                 this.comm = process.argv.slice(2)
+<<<<<<< HEAD
+=======
+                let isHttpApiErr = false
+>>>>>>> upstream/master
                 if (this.comm[0] == "p") {
                     this.isExecComm = true
                     //phone
                     this.log(`开始执行指令【${this.comm[0]}】=> 发送到手机测试脚本！`)
                     if (this.isEmpty(this.options) || this.isEmpty(this.options.httpApi)) {
+<<<<<<< HEAD
+=======
+                        this.log(`未设置options，使用默认值`)
+>>>>>>> upstream/master
                         //设置默认值
                         if (this.isEmpty(this.options)) {
                             this.options = {}
                         }
+<<<<<<< HEAD
                         this.options.httpApi = `ffff@3.3.3.18:6166`;
                     } else {
                         //判断格式
@@ -95,11 +104,29 @@ function ToolKit(scriptName, scriptId, options) {
                         }
                     }
                     await this.callApi();
+=======
+                        this.options.httpApi = `ffff@3.3.3.18:6166`
+                    } else {
+                        //判断格式
+                        if (!/.*?@.*?:[0-9]+/.test(this.options.httpApi)) {
+                            isHttpApiErr = true
+                            this.log(`❌httpApi格式错误！格式：ffff@3.3.3.18:6166`)
+                            this.done()
+                        }
+                    }
+                    if (!isHttpApiErr) {
+                        await this.callApi(this.comm[1]);
+                    }
+>>>>>>> upstream/master
                 }
             }
         }
 
+<<<<<<< HEAD
         callApi() {
+=======
+        callApi(timeout) {
+>>>>>>> upstream/master
             let fname = this.getCallerFileNameAndLine().split(":")[0].replace("[", "")
             this.log(`获取【${fname}】内容传给手机`)
             let scriptStr = ''
@@ -127,7 +154,11 @@ function ToolKit(scriptName, scriptId, options) {
                 body: {
                     "script_text": `${scriptStr}`,
                     "mock_type": "cron",
+<<<<<<< HEAD
                     "timeout": 5
+=======
+                    "timeout": (!this.isEmpty(timeout) && timeout > 5) ? timeout : 5
+>>>>>>> upstream/master
                 },
                 json: true
             }
@@ -173,6 +204,10 @@ function ToolKit(scriptName, scriptId, options) {
                 let boxJsJson = {}
                 boxJsJson.id = `${this.prefix}${this.id}`
                 boxJsJson.name = this.name
+<<<<<<< HEAD
+=======
+                boxJsJson.desc_html = "⚠️使用说明</br>详情【<a href='script_url?raw=true'><font class='red--text'>点我查看</font></a>】"
+>>>>>>> upstream/master
                 boxJsJson.icons = [`${domain}/mini/master/${this.id.toLocaleLowerCase()}.png`,`${domain}/task/master/${this.id.toLocaleLowerCase()}.png`]
                 boxJsJson.keys = []
                 boxJsJson.settings = [
@@ -191,7 +226,11 @@ function ToolKit(scriptName, scriptId, options) {
                         "desc": "默认关闭"
                     },
                     {
+<<<<<<< HEAD
                         "id": `${this.prefix}isEnableTgNotify${this.id}`,
+=======
+                        "id": `${this.prefix}IsEnableTgNotify${this.id}`,
+>>>>>>> upstream/master
                         "name": "开启/关闭Telegram通知",
                         "val": false,
                         "type": "boolean",
@@ -207,6 +246,10 @@ function ToolKit(scriptName, scriptId, options) {
                 ]
                 boxJsJson.author = "@lowking"
                 boxJsJson.repo = "https://github.com/lowking/Scripts"
+<<<<<<< HEAD
+=======
+                boxJsJson.script = "script_url?raw=true"
+>>>>>>> upstream/master
                 //除了settings和keys追加，其他的都覆盖
                 if (!this.isEmpty(info)) {
                     for (let i in needAppendKeys) {
@@ -245,6 +288,13 @@ function ToolKit(scriptName, scriptId, options) {
             }
         }
 
+<<<<<<< HEAD
+=======
+        prependNotifyInfo(info) {
+            this.notifyInfo.splice(0, 0, info)
+        }
+
+>>>>>>> upstream/master
         execFail() {
             this.execStatus = false
         }

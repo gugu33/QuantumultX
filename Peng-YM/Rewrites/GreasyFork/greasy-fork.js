@@ -37,7 +37,11 @@ try {
 }
 
 function processScript(script, name) {
+<<<<<<< HEAD
   script = script.replace(/`|\${/g, function (match) {
+=======
+  script = script.replace(/`|\$|%{/g, function (match) {
+>>>>>>> upstream/master
     return "\\" + match;
   });
   // get host name

@@ -1,6 +1,10 @@
 /*
 脚本：取关京东店铺和商品
+<<<<<<< HEAD
 更新时间：2020-08-07
+=======
+更新时间：2020-08-15
+>>>>>>> upstream/master
 因种豆得豆和宠汪汪以及NobyDa大佬的京东签到脚本会关注店铺和商品，故此脚本用来取消已关注的店铺和商品
 默认每运行一次脚本取消关注10个商品，10个店铺。可结合boxjs自定义取消多少个（目前测试通过最大数量是一次性取消300个商品无异常，大于300请自行测试，建议尽量不要一次性全部取消以免出现问题）。
 建议此脚本运行时间在 种豆得豆和宠汪汪脚本运行之后 再执行
@@ -14,6 +18,7 @@
 [Script]
 cron "55 23 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_unsubscribe.js,tag=取关京东店铺商品
 // Surge
+<<<<<<< HEAD
 取关京东店铺商品 = type=cron,cronexp=55 23 * * *,wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_unsubscribe.js
  */
 const $ = new Env('取关京东店铺和商品');
@@ -44,6 +49,47 @@ const JD_API_HOST = 'https://wq.jd.com/fav';
     UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/)[1]);
     await jdUnsubscribe(cookie2);
     // $.msg('【京东账号二】取关京东店铺商品失败', '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+=======
+取关京东店铺商品 = type=cron,cronexp="55 23 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_unsubscribe.js
+ */
+const $ = new Env('取关京东店铺和商品');
+//Node.js用户请在jdCookie.js处填写京东ck;
+const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+const notify = $.isNode() ? require('./sendNotify') : '';
+
+//IOS等用户直接用NobyDa的jd cookie
+let cookiesArr = [], cookie = '';
+if ($.isNode()) {
+  Object.keys(jdCookieNode).forEach((item) => {
+    cookiesArr.push(jdCookieNode[item])
+  })
+} else {
+  cookiesArr.push($.getdata('CookieJD'));
+  cookiesArr.push($.getdata('CookieJD2'));
+}
+const goodPageSize = $.getdata('jdUnsubscribePageSize') || 10;// 运行一次取消多少个已关注的商品。数字0表示不取关任何商品
+const shopPageSize = $.getdata('jdUnsubscribeShopPageSize') || 10;// 运行一次取消多少个已关注的店铺。数字0表示不取关任何店铺
+const jdNotify = $.getdata('jdUnsubscribeNotify');
+const stop = $.getdata('jdUnsubscribeStopGoods') || '';//遇到此商品不再进行取关，此处内容需去商品详情页（自营处）长按拷贝商品信息
+const stopShop = $.getdata('jdUnsubscribeStopShop') || '';//遇到此店铺不再进行取关，此处内容请尽量从头开始输入店铺名称
+
+let UserName = '';
+const JD_API_HOST = 'https://wq.jd.com/fav';
+!(async () => {
+  if (!cookiesArr[0]) {
+    $.msg('【京东账号一】取关京东店铺商品失败', '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+  }
+  for (let i = 0; i < cookiesArr.length; i++) {
+    if (cookiesArr[i]) {
+      cookie = cookiesArr[i];
+      UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
+      $.index = i + 1;
+      console.log(`\n开始【京东账号${$.index}】${UserName}\n`);
+      message = '';
+      subTitle = '';
+      await jdUnsubscribe();
+    }
+>>>>>>> upstream/master
   }
 })()
     .catch((e) => {
@@ -62,7 +108,11 @@ async function jdUnsubscribe(doubleKey) {
     getFollowGoods()
   ])
   if (!jdNotify || jdNotify === 'false') {
+<<<<<<< HEAD
     $.msg($.name, ``, `【京东账号${doubleKey ? '二':'一'}】${UserName}\n【已取消关注店铺】${$.unsubscribeShopsCount}个\n【已取消关注商品】${$.unsubscribeGoodsCount}个\n【还剩关注店铺】${$.shopsTotalNum}个\n【还剩关注商品】${$.goodsTotalNum}个\n`);
+=======
+    $.msg($.name, ``, `【京东账号${$.index}】${UserName}\n【已取消关注店铺】${$.unsubscribeShopsCount}个\n【已取消关注商品】${$.unsubscribeGoodsCount}个\n【还剩关注店铺】${$.shopsTotalNum}个\n【还剩关注商品】${$.goodsTotalNum}个\n`);
+>>>>>>> upstream/master
   }
 }
 
@@ -72,7 +122,11 @@ function unsubscribeGoods(doubleKey) {
     if (followGoods.iRet === '0') {
       let count = 0;
       $.unsubscribeGoodsCount = count;
+<<<<<<< HEAD
       if (goodPageSize !== '0') {
+=======
+      if ((goodPageSize * 1) !== 0) {
+>>>>>>> upstream/master
         if (followGoods.totalNum > 0) {
           for (let item of followGoods.data) {
 
@@ -100,11 +154,22 @@ function unsubscribeGoods(doubleKey) {
         resolve(count);
       }
     } else if (followGoods.iRet === '9999') {
+<<<<<<< HEAD
       $.msg('取关京东店铺商品失败', `【提示】京东账号${doubleKey ? '二':'一'}cookie已失效,请重新登录获取`, '请点击此处去获取Cookie\n https://bean.m.jd.com/ \n', {"open-url": "https://bean.m.jd.com/"});
       if (doubleKey) {
         $.setdata('', 'CookieJD2')
       } else {
         $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
+=======
+      $.msg('取关京东店铺商品失败', `【提示】京东账号${$.index}${UserName}cookie已失效,请重新登录获取`, '请点击此处去获取Cookie\n https://bean.m.jd.com/ \n', {"open-url": "https://bean.m.jd.com/"});
+      if ($.index === 1) {
+        $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
+      } else if ($.index === 2){
+        $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
+      }
+      if ($.isNode() && notify.SCKEY) {
+        await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n\n请重新登录获取cookie`);
+>>>>>>> upstream/master
       }
       $.done();
     }
@@ -173,7 +238,11 @@ function unsubscribeShops() {
     if (followShops.iRet === '0') {
       let count = 0;
       $.unsubscribeShopsCount = count;
+<<<<<<< HEAD
       if (shopPageSize !== '0') {
+=======
+      if ((shopPageSize * 1) !== 0) {
+>>>>>>> upstream/master
         if (followShops.totalNum > 0) {
           for (let item of followShops.data) {
             if (stopShop && (item.shopName && item.shopName.indexOf(stopShop.replace(/\s*/g, '')) > -1)) {

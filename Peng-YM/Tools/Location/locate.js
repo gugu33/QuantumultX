@@ -25,10 +25,20 @@ type=http-request, pattern=https:\/\/((weather-data\.apple)|(api.weather))\.com,
 */
 
 const url = $request.url;
+<<<<<<< HEAD
 const res = url.match(/weather\/.*?\/(.*)\/(.*)\?/);
 const latitude = res[1];
 const longitude = res[2];
 // console.log(`当前位置：纬度${latitude}，经度${longitude}`);
+=======
+const res =
+    url.match(/weather\/.*?\/(.*)\/(.*)\?/) ||
+    url.match(/geocode\/([0-9.]*)\/([0-9.]*)\//) ||
+    url.match(/geocode=([0-9.]*),([0-9.]*)/);
+const latitude = res[1];
+const longitude = res[2];
+console.log(`当前位置：纬度${latitude}，经度${longitude}`);
+>>>>>>> upstream/master
 
 // write data
 if (typeof $prefs !== 'undefined'){
